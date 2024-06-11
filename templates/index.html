@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 검색</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1 style="text-align: center;">중고상품 검색</h1>
+    <form method="post" style="text-align: center;">
+        <label for="query">검색어를 입력하세요:</label>
+        <input type="text" id="query" name="query" required>
+        <button type="submit">검색</button>
+    </form>
+    {% if query %}
+        <h2>검색 결과 - {{ query }}</h2>
+        <div class="tabs">
+            <button class="tab-button" onclick="openTab(event, 'joongna')">중고나라</button>
+            <button class="tab-button" onclick="openTab(event, 'bunjang')">번개장터</button>
+        </div>
+        <div id="joongna" class="tab-content">
+            <h3>중고나라</h3>
+            <ul>
+                {% for result in jun_results %}
+                    {% if result.error %}
+                        <li>{{ result.error }}</li>
+                    {% else %}
+                        <li>
+                            <a href="{{ result.url }}" target="_blank">{{ result.title }}</a> - {{ result.price }}
+                            <br>
+                            <img src = "{{result.img}}" alt="{{result.title}}" style = "width: 100px;">
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="bunjang" class="tab-content" style="display:none">
+            <h3>번개장터</h3>
+            <ul>
+                {% for result in bun_results %}
+                    {% if result.error %}
+                        <li>{{ result.error }}</li>
+                    {% else %}
+                        <li>
+                            <a href="{{ result.url }}" target="_blank">{{ result.title }}</a> - {{ result.price }}
+                            <br>
+                            <img src="{{ result.image }}" alt="{{ result.title }}" style="width: 100px;">
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
