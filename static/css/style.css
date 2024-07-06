@@ -28,7 +28,7 @@ li {
 
 a {
     text-decoration: none;
-    color: #007bff;
+    color: black;
 }
 
 a:hover {
@@ -63,4 +63,52 @@ a:hover {
     display: none;
     padding: 6px 12px;
     border-top: none;
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.product {
+    flex: 1 1 calc(33.333% - 10px);
+    box-sizing: border-box;
+}
+
+
+
+.product img {
+    max-width: 50%;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 1200px) {
+    .product {
+        flex: 1 1 calc(50% - 10px);
+    }
+}
+
+@media (max-width: 768px) {
+    .product {
+        flex: 1 1 calc(100% - 10px);
+    }
+}
+
+.loader{
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+@keyframes spin{
+    0% {transform: translate(-50%,-50%) rotate(0deg);}
+    100% {transform:translate(-50%,-50%) rotate(360deg);}
 }
