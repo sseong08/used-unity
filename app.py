@@ -7,6 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service as ChromeService
+from operator import itemgetter
 
 app = Flask(__name__)
 
@@ -39,16 +40,16 @@ def junggo(plusurl):
     driver.quit()
     
     results = []
-    titles = soup.find_all(class_="line-clamp-2 text-sm md:text-base text-heading")
+    titles = soup.find_all(class_="line-clamp-2 min-h-[2lh] text-sm md:text-base")
     prices = soup.find_all(class_="font-semibold space-s-2 mt-0.5 text-heading lg:text-lg lg:mt-1.5")
-    links = soup.find_all(class_="group box-border overflow-hidden flex rounded-md cursor-pointer pe-0 pb-2 lg:pb-3 flex-col items-start transition duration-200 ease-in-out transform bg-white")
+    links = soup.find_all(class_="relative group box-border overflow-hidden flex rounded-md cursor-pointer pe-0 pb-2 lg:pb-3 flex-col items-start transition duration-200 ease-in-out transform bg-white")
     images = soup.find_all("img", class_="bg-gray-300 object-cover h-full group-hover:scale-105 w-full transition duration-200 ease-in rounded-md")
 
     if len(titles) == len(prices) == len(links):
         for title, price, link, image in zip(titles, prices, links, images):
             result = {
                 "title": title.get_text(strip=True),
-                "price": price.get_text(strip=True),
+                "price": price.get_text(strip=True).replace("원",""),
                 "url": junjun + link['href'].replace("//", "/"),
                 "img": image['src']
             }
@@ -79,12 +80,16 @@ def lightning(plusurl):
     
     return results
 
+
+# junggo(plusurl="에어팟")
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         query = request.form['query']
         jun_results = junggo(query)
+        asc_jun_results = sorted(jun_results, key=itemgetter('price'))
         bun_results = lightning(query)
+        # print(asc_jun_results)
         return render_template('index.html', query=query, jun_results=jun_results, bun_results=bun_results)
     return render_template('index.html')
 
