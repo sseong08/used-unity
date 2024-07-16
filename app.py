@@ -7,14 +7,13 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service as ChromeService
-from operator import itemgetter
 
 app = Flask(__name__)
 
 customheader = {
     'refer': "https://m.bunjang.co.kr/",
     'user-agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
-} 
+}
 
 baseurl_bun = 'https://api.bunjang.co.kr/api/1/find_v2.json?q='
 lasturl_bun = '&order=score&page=0&request_id=20221204202700&f_category_id=&stat_device=w&n=100&stat_category_required=1&req_ref=search&version=4'
@@ -29,10 +28,8 @@ def junggo(plusurl):
     options.add_experimental_option("detach", True)  # 브라우저 바로 닫힘 방지
     options.add_experimental_option("excludeSwitches", ["enable-logging"])  # 불필요한 메시지 제거
     options.add_argument("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")  # 헤더 값 입력
-    # options.add_argument('headless')
     
     service = ChromeService(executable_path=ChromeDriverManager().install())  # 자동으로 최신 크롬드라이버 다운로드
-
     driver = webdriver.Chrome(service=service, options=options)  # 크롬 실행
     driver.get(jun_url)
 
@@ -49,9 +46,10 @@ def junggo(plusurl):
         for title, price, link, image in zip(titles, prices, links, images):
             result = {
                 "title": title.get_text(strip=True),
-                "price": price.get_text(strip=True).replace("원",""),
+                "price": price.get_text(strip=True),
                 "url": junjun + link['href'].replace("//", "/"),
-                "img": image['src']
+                "image": image['src'],
+                "source": "[중]"
             }
             results.append(result)
     else:
@@ -66,13 +64,14 @@ def lightning(plusurl):
     results = []
     if req.status_code == requests.codes.ok:
         stock_data = json.loads(req.text)
-        for i, thing in enumerate(stock_data["list"], 1):
+        for thing in stock_data["list"]:
             if "삽니다" not in thing['name']:
                 result = {
                     "title": thing['name'],
                     "price": f'{int(thing["price"]):,} 원',
                     "url": 'https://m.bunjang.co.kr/products/' + thing["pid"] + '?q=' + plusurl + '&ref=' + urllib.parse.quote_plus("검색결과"),
-                    "image": thing['product_image']
+                    "image": thing['product_image'],
+                    "source": "[번]"
                 }
                 results.append(result)
     else:
@@ -80,18 +79,15 @@ def lightning(plusurl):
     
     return results
 
-
-# junggo(plusurl="에어팟")
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         query = request.form['query']
         jun_results = junggo(query)
-        asc_jun_results = sorted(jun_results, key=itemgetter('price'))
         bun_results = lightning(query)
-        # print(asc_jun_results)
-        return render_template('index.html', query=query, jun_results=jun_results, bun_results=bun_results)
+        all_results = sorted(jun_results + bun_results, key=lambda x: x.get('title', ''))
+        return render_template('index.html', query=query, jun_results=jun_results, bun_results=bun_results, all_results=all_results)
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
