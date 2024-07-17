@@ -24,7 +24,7 @@
             <button class="tab-button" onclick="openTab(event, 'joongna')">중고나라</button>
             <button class="tab-button" onclick="openTab(event, 'bunjang')">번개장터</button>
         </div>
-        <div id="all" class="tab-content" style="display:none">
+        <div id="all" class="tab-content">
             <h3>통합</h3>
             <ul class="products">
                 {% for result in all_results %}
@@ -33,16 +33,18 @@
                     {% else %}
                     <a href="{{ result.url }}" target="_blank">
                         <li class="product">
-                            <p><b>{{ result.source }}</b> {{ result.title }}</p>
-                            <p>{{ result.price }}</p>
                             <img src="{{ result.image }}" alt="{{ result.title }}">
+                            <div class="product-details">
+                                <p class="product-title">{{ result.title }} {{ result.source }}</p>
+                                <p class="product-price">{{ result.price }}</p>
+                            </div>
                         </li>
                     </a>
                     {% endif %}
                 {% endfor %}
             </ul>
         </div>
-        <div id="joongna" class="tab-content">
+        <div id="joongna" class="tab-content" style="display:none">
             <h3>중고나라</h3>
             <ul class="products">
                 {% for result in jun_results %}
@@ -51,9 +53,11 @@
                     {% else %}
                     <a href="{{ result.url }}" target="_blank">
                         <li class="product">
-                            <p>{{ result.title }}</p>
-                            <p>{{ result.price }}</p>
                             <img src="{{ result.image }}" alt="{{ result.title }}">
+                            <div class="product-details">
+                                <p class="product-title">{{ result.title }}</p>
+                                <p class="product-price">{{ result.price }}</p>
+                            </div>
                         </li>
                     </a>
                     {% endif %}
@@ -69,9 +73,11 @@
                     {% else %}
                     <a href="{{ result.url }}" target="_blank">
                         <li class="product">
-                            <p>{{ result.title }}</p>
-                            <p>{{ result.price }}</p>
                             <img src="{{ result.image }}" alt="{{ result.title }}">
+                            <div class="product-details">
+                                <p class="product-title">{{ result.title }}</p>
+                                <p class="product-price">{{ result.price }}</p>
+                            </div>
                         </li>
                     </a>
                     {% endif %}

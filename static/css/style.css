@@ -24,11 +24,13 @@ li {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    overflow: hidden;
+    position: relative;
 }
 
 a {
     text-decoration: none;
-    color: black;
+    color: #000000;
 }
 
 a:hover {
@@ -66,48 +68,60 @@ a:hover {
 }
 
 .products {
+    list-style-type: none;
+    padding: 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 10px;
 }
 
 .product {
-    flex: 1 1 calc(33.333% - 10px);
-    box-sizing: border-box;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.product-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 5px;
+}
+
+.product-price {
+    font-size: 14px;
+    color: #888;
+    margin: 0;
 }
 
 .product img {
-    max-width: 100%;
-    max-height: 200px; 
+    width: 100px; /* 이미지 크기를 원하는 대로 조정 */
     height: auto;
-    display: block;
-    object-fit: cover; 
+    transition: transform 0.3s ease;
 }
 
-
-
-@media (max-width: 1200px) {
-    .product {
-        flex: 1 1 calc(50% - 10px);
-    }
+.product-details {
+    margin-left: 15px;
 }
 
-@media (max-width: 768px) {
-    .product {
-        flex: 1 1 calc(100% - 10px);
-    }
+.product:hover img {
+    transform: scale(1.2);
 }
 
+/* 로딩 오버레이 스타일 */
 .loading-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(255, 255, 255, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     z-index: 1000;
 }
 
