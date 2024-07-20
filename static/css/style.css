@@ -9,8 +9,45 @@ h1 {
     color: #333;
 }
 
+.search{
+    text-align: center;
+}
 form {
     margin-bottom: 20px;
+    display: inline-block;
+    padding: 10px 20px;  /* 패딩 추가 */
+    border-radius: 8px;  /* 테두리 반경 추가 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* 그림자 추가 */
+}
+
+form input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+    box-sizing: border-box;  /* 패딩과 테두리를 포함한 전체 너비 */
+    transition: border-color 0.3s;  /* 테두리 색상 변화에 트랜지션 추가 */
+}
+
+form input[type="text"]:focus {
+    border-color: #c6c6c6;  /* 포커스 시 테두리 색상 변경 */
+    outline: none;  /* 기본 포커스 스타일 제거 */
+}
+
+form button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    background-color: #c6c6c6;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;  /* 배경색 변화에 트랜지션 추가 */
+}
+
+form button:hover {
+    background-color: #7b7b7b;  /* 호버 시 배경색 변경 */
 }
 
 ul {

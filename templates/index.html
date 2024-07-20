@@ -12,11 +12,13 @@
         <div class="loader"></div>
     </div>
     <h1 style="text-align: center;">중고 대통합</h1>
-    <form method="post" style="text-align: center;" id="search-form">
-        <label for="query">검색어를 입력하세요:</label>
-        <input type="text" id="query" name="query" required>
-        <button type="submit">검색</button>
-    </form>
+    <div class="search">
+        <form method="post" id="search-form">
+            <label for="query">검색어를 입력하세요 </label>
+            <input type="text" id="query" name="query" required>
+            <button type="submit">검색</button>
+        </form>
+    </div>
     {% if query %}
         <h2>검색 결과 - {{ query }}</h2>
         <div class="tabs">
@@ -35,7 +37,7 @@
                         <li class="product">
                             <img src="{{ result.image }}" alt="{{ result.title }}">
                             <div class="product-details">
-                                <p class="product-title">{{ result.title }} {{ result.source }}</p>
+                                <p class="product-title">{{ result.source }}  {{ result.title }}</p>
                                 <p class="product-price">{{ result.price }}</p>
                             </div>
                         </li>
