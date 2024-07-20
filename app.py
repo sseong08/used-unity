@@ -32,7 +32,7 @@ def junggo(plusurl):
     options.add_argument("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")  # 헤더 값 입력
     
     # service = ChromeService(executable_path=ChromeDriverManager().install())  # 자동으로 최신 크롬드라이버 다운로드
-    service = ChromeService(excutable_path="/home/ubuntu/chrome-linux64/chrome")
+    service = ChromeService(excutable_path="/home/ubuntu/chromedriver-linux64/chromedriver")
     driver = webdriver.Chrome(service=service, options=options)  # 크롬 실행
     driver.get(jun_url)
 
