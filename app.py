@@ -26,6 +26,7 @@ def junggo(plusurl):
     jun_url = baseurl_jun + urllib.parse.quote_plus(plusurl)
     options = Options()
     options.add_experimental_option("detach", True)  # 브라우저 바로 닫힘 방지
+    options.add_argument("--headless=new")
     options.add_experimental_option("excludeSwitches", ["enable-logging"])  # 불필요한 메시지 제거
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
