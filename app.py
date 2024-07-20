@@ -4,7 +4,7 @@ import json
 import urllib.parse
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-# from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service as ChromeService
 
@@ -29,8 +29,8 @@ def junggo(plusurl):
     options.add_experimental_option("excludeSwitches", ["enable-logging"])  # 불필요한 메시지 제거
     options.add_argument("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")  # 헤더 값 입력
     
-    # service = ChromeService(executable_path=ChromeDriverManager().install())  # 자동으로 최신 크롬드라이버 다운로드
-    driver = webdriver.Chrome(options=options)  # 크롬 실행
+    service = ChromeService(executable_path=ChromeDriverManager().install())  # 자동으로 최신 크롬드라이버 다운로드
+    driver = webdriver.Chrome(service=service, options=options)  # 크롬 실행
     driver.get(jun_url)
 
     soup = BeautifulSoup(driver.page_source, "html.parser")
