@@ -31,7 +31,7 @@ def junggo(plusurl):
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")  # 헤더 값 입력
 
-    chrome_service = ChromeService(executable_path="/home/ubuntu/chromedriver")  # ChromeDriver 절대 경로 설정
+    chrome_service = ChromeService(executable_path="/usr/local/bin/chromedriver")  # ChromeDriver 절대 경로 설정
     driver = webdriver.Chrome(service=chrome_service, options=options)  # 크롬 실행
     driver.get(jun_url)
 
