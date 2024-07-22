@@ -87,7 +87,7 @@ def index():
         query = request.form['query']
         jun_results = junggo(query)
         bun_results = lightning(query)
-        all_results = sorted(jun_results + bun_results, key=lambda x: x.get('title', ''))
+        all_results = sorted(jun_results + bun_results, key=lambda x: int(x['price'].replace(',', '').replace('원', '').replace(' ', '')))
         return render_template('index.html', query=query, jun_results=jun_results, bun_results=bun_results, all_results=all_results)
         print(query)
     return render_template('index.html')
