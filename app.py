@@ -85,7 +85,7 @@ def lightning(plusurl):
 def index():
     if request.method == 'POST':
         query = request.form['query']
-        print(query)
+        print("search: "+query)
         jun_results = junggo(query)
         bun_results = lightning(query)
         all_results = sorted(jun_results + bun_results, key=lambda x: int(x['price'].replace(',', '').replace('원', '').replace(' ', '')))
