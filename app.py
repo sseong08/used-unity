@@ -89,6 +89,7 @@ def index():
         bun_results = lightning(query)
         all_results = sorted(jun_results + bun_results, key=lambda x: x.get('title', ''))
         return render_template('index.html', query=query, jun_results=jun_results, bun_results=bun_results, all_results=all_results)
+        print(query)
     return render_template('index.html')
 
 if __name__ == '__main__':
