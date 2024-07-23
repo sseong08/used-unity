@@ -92,5 +92,9 @@ def index():
         return render_template('index.html', query=query, jun_results=jun_results, bun_results=bun_results, all_results=all_results)
     return render_template('index.html')
 
+@app.route('/ads.txt')
+def ads():
+    return send_from_directory(app.root_path, 'ads.txt')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
