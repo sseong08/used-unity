@@ -96,5 +96,9 @@ def index():
 def ads():
     return send_from_directory(app.root_path, 'ads.txt')
 
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory(app.root_path, 'sitemap.xml')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
